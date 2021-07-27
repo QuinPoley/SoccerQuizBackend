@@ -15,20 +15,20 @@ def home():
 def getAllQuizes():
     con = sqlite3.connect('Quiz.db')
     cur = con.cursor()
-    returnvalue = "{"
+    returnvalue = "["
     for row in cur.execute('SELECT name FROM quiz'):
-        returnvalue = returnvalue + row[0] +', '
-    returnvalue = returnvalue[:-2] + "}"
+        returnvalue = returnvalue + '{ "name": "' + row[0] +'"}, '
+    returnvalue = returnvalue[:-2] + "]" # last space and comma
     con.close()
     return returnvalue
 
 
-@app.get("/quiz/")
-def getAllQuizes():
+@app.get("/quiz/{quizid}")
+def getAllQuizes(quizid: str):
     con = sqlite3.connect('Quiz.db')
     cur = con.cursor()
     returnvalue = "{"
-    for row in cur.execute("SELECT * FROM quiz WHERE name='EPL Kits';"):
+    for row in cur.execute("SELECT * FROM quiz WHERE name='"+quizid+"';"): # Yes I know SQL Injection {quizid}
         fullquiz = ""
         for col in row:
             fullquiz = fullquiz + " " + col

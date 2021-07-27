@@ -10,9 +10,9 @@ cur.execute('''CREATE TABLE quiz
               (name text, question1 text, answer1 text, question2 text, answer2 text)''')
 
 # Insert a row of data
-cur.execute("INSERT INTO quiz VALUES ('EPL Kits','What color is Manchester United home kit?','Red','What color is Liverpool home kit?','Red')")
-cur.execute("INSERT INTO quiz VALUES ('EPL Winners','What year did leicester win the epl?','2015','What color is Liverpool home kit?','Red')")
-cur.execute("INSERT INTO quiz VALUES ('UEFA Quiz','Who won the UEFA Champions league in 2007?','AC Milan','What color is Liverpool home kit?','Red')")
+cur.execute("INSERT INTO quiz VALUES ('EPLKits','What color is Manchester United home kit?','Red','What color is Liverpool home kit?','Red')")
+cur.execute("INSERT INTO quiz VALUES ('EPLWinners','What year did leicester win the epl?','2015','What color is Liverpool home kit?','Red')")
+cur.execute("INSERT INTO quiz VALUES ('UEFAQuiz','Who won the UEFA Champions league in 2007?','AC Milan','What color is Liverpool home kit?','Red')")
 # Save (commit) the changes
 con.commit()
 
