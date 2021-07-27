@@ -33,13 +33,16 @@ def getAllQuizes():
 
 @app.get("/quiz/{quizid}")
 def getAllQuizes(quizid: str):
-    con = sqlite3.connect('Quiz.db')
+    con = sqlite3.connect('Question.db')
     cur = con.cursor()
-    returnvalue = "{"
-    for row in cur.execute("SELECT * FROM quiz WHERE name='"+quizid+"';"): # Yes I know SQL Injection {quizid}
-        fullquiz = ""
-        for col in row:
-            fullquiz = fullquiz + " " + col
-        returnvalue = returnvalue + fullquiz
-    returnvalue = returnvalue + "}"
+    returnvalue = '{ "quiz": [ '
+    values = ['"text"', '"A"', '"B"', '"C"', '"D"']
+    for row in cur.execute("SELECT question, a, b, c, d FROM questions WHERE quiz='"+quizid+"';"): # Yes I know SQL Injection {quizid}
+        fullquiz = "{"
+        #col in row
+        for i in range(len(row)):
+            var = values[i]
+            fullquiz = fullquiz + var +':"'+ row[i] +'",'
+        returnvalue = returnvalue + fullquiz[:-1] + "},"
+    returnvalue = returnvalue[:-1] + "]}"
     return returnvalue
