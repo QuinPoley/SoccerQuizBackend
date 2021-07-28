@@ -1,5 +1,5 @@
 #uvicorn main:app --reload
-from fastapi import FastAPI
+from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 
@@ -46,3 +46,22 @@ def getAllQuizes(quizid: str):
         returnvalue = returnvalue + fullquiz[:-1] + "},"
     returnvalue = returnvalue[:-1] + "]}"
     return returnvalue
+
+#= Form(...)
+@app.post("/quiz/grade/{quizid}")
+def gradeQuiz(quizid: str, responses : str):
+    # Hello  '{"score":100}'
+    return responses
+    score = 0
+    scoreinterval = 100 / 5 #Number of questions
+    answers = responses.split(',')
+    answers = list(map(lambda x: x.strip(), answers))
+    correctanswers = ""
+    con = sqlite3.connect('Question.db')
+    cur = con.cursor()
+    for row in cur.execute("SELECT number, answer FROM questions WHERE quiz='"+quizid+"';"):
+        correctanswers += row[1]
+        if(answers[(row[0]-1)] == row[1]):
+            score += scoreinterval
+    return '{ "score":'+str(score)+'}'
+    #'{ "score":'+str(score)+'}'  str(answers) + correctanswers
