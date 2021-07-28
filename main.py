@@ -1,5 +1,6 @@
 #uvicorn main:app --reload
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, responses
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 
@@ -48,13 +49,16 @@ def getAllQuizes(quizid: str):
     return returnvalue
 
 #= Form(...)
+class QuizAnswers(BaseModel):
+    responses: str
+
+
 @app.post("/quiz/grade/{quizid}")
-def gradeQuiz(quizid: str, responses : str):
+def gradeQuiz(quizid: str, quiz : QuizAnswers):
     # Hello  '{"score":100}'
-    return responses
     score = 0
     scoreinterval = 100 / 5 #Number of questions
-    answers = responses.split(',')
+    answers = quiz.responses.split(',')
     answers = list(map(lambda x: x.strip(), answers))
     correctanswers = ""
     con = sqlite3.connect('Question.db')
