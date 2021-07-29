@@ -67,5 +67,5 @@ def gradeQuiz(quizid: str, quiz : QuizAnswers):
         correctanswers += row[1]
         if(answers[(row[0]-1)] == row[1]):
             score += scoreinterval
-    return '{ "score":'+str(score)+'}'
+    return '{ "score":"'+str(score)+'"}'
     #'{ "score":'+str(score)+'}'  str(answers) + correctanswers
